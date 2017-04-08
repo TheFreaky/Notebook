@@ -1,29 +1,33 @@
-package notebook.db;
+package notebook.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Максим on 07.04.2017.
  */
 @Entity
 @Table(name = "events", schema = "notebook")
-public class EventsEntity {
-    private Integer id;
+public class EventDataSet implements Serializable {
+    private Long id;
     private String name;
     private String description;
-    private Integer date;
+    private Date date;
+
+    public EventDataSet() {
+    }
 
     @Id
-    @Column(name = "id", nullable = false)
-    public Integer getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //used for primary key value generation
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    @Basic
     @Column(name = "name", nullable = true, length = 80)
     public String getName() {
         return name;
@@ -33,7 +37,6 @@ public class EventsEntity {
         this.name = name;
     }
 
-    @Basic
     @Column(name = "description", nullable = true, length = -1)
     public String getDescription() {
         return description;
@@ -43,13 +46,13 @@ public class EventsEntity {
         this.description = description;
     }
 
-    @Basic
     @Column(name = "date", nullable = false)
-    public Integer getDate() {
+//    @Temporal(TemporalType.TIMESTAMP)
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Integer date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -58,7 +61,7 @@ public class EventsEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        EventsEntity that = (EventsEntity) o;
+        EventDataSet that = (EventDataSet) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -75,5 +78,15 @@ public class EventsEntity {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "EventDataSet{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                '}';
     }
 }
