@@ -1,5 +1,7 @@
 package notebook.entity;
 
+import notebook.logic.Event;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +18,26 @@ public class EventDataSet implements Serializable {
     private Date date;
 
     public EventDataSet() {
+    }
+
+    public EventDataSet(Event event) {
+        id = event.getId();
+        name = event.getTitle();
+        description = event.getDescription();
+        date = event.getStartDate().getTime();
+    }
+
+    public EventDataSet(String name, String description, Date date) {
+        this.name = name;
+        this.description = description;
+        this.date = date;
+    }
+
+    public EventDataSet(Long id, String name, String description, Date date) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.date = date;
     }
 
     @Id

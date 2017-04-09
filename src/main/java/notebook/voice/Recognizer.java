@@ -8,6 +8,7 @@ import notebook.logic.Event;
 import notebook.logic.EventList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Максим on 11.02.2017.
@@ -52,7 +53,7 @@ public class Recognizer {
 
 
     public static void readAll() throws AudioPlayException, TextRecognitionException {
-        ArrayList<Event> events = EventList.getInstance().getEvents();
+        List<Event> events = EventList.getInstance().getEvents();
         System.out.println(events.toString());
 
         int num = 1;

@@ -1,6 +1,7 @@
 package notebook.db;
 
 import notebook.entity.EventDataSet;
+import notebook.exceptions.DBException;
 import org.hibernate.Session;
 
 import java.util.Calendar;
@@ -27,16 +28,19 @@ public class Main {
 //        testUpdateEvent();
 //        testDeleteEvent();
 //        testDeleteEventById();
-        testGetAll();
-        System.out.println("________________________________________________");
-        testGetAllSortByDate();
-        System.out.println("________________________________________________");
-        testGetAllSortByName();
-        session.close();
+//        testGetAll();
+//        System.out.println("________________________________________________");
+//        testGetAllSortByDate();
+//        System.out.println("________________________________________________");
+//        testGetAllSortByName();
+//        session.close();
+
+        testGetServiece();
+        testGetAllServiece();
         db.close();
     }
 
-    public static boolean testInsertEvent() {
+    public static void testInsertEvent() {
         EventDataSet event = new EventDataSet();
 
         event.setName("123");
@@ -51,33 +55,28 @@ public class Main {
         session.getTransaction().begin();// instead of session.beginTransaction()
         eventDAO.insertEvent(event);
         session.getTransaction().commit();
-
-        return true;
     }
 
-    public static boolean testGetEvent() {
+    public static void testGetEvent() {
         EventDataSet eventDataSet = eventDAO.getById(19L);
         System.out.println(eventDataSet);
-        return true;
     }
 
-    public static boolean testGetAll() {
+    public static void testGetAll() {
         List<EventDataSet> events = eventDAO.getAll();
         for (EventDataSet event : events) {
             System.out.println(event);
         }
-        return true;
     }
 
-    public static boolean testGetEventByNameAndDate() {
+    public static void testGetEventByNameAndDate() {
         EventDataSet event = eventDAO.getById(19L);
 
         EventDataSet eventDataSet = eventDAO.getByNameAndDate(event.getName(), event.getDate());
         System.out.println(eventDataSet);
-        return true;
     }
 
-    public static boolean testUpdateEvent() {
+    public static void testUpdateEvent() {
         EventDataSet event = eventDAO.getById(17L);
         System.out.println(event);
 
@@ -89,10 +88,9 @@ public class Main {
 
         event = eventDAO.getById(17L);
         System.out.println(event);
-        return true;
     }
 
-    public static boolean testDeleteEvent() {
+    public static void testDeleteEvent() {
         EventDataSet event = eventDAO.getById(23L);
         System.out.println(event);
 
@@ -102,32 +100,49 @@ public class Main {
 
         event = eventDAO.getById(23L);
         System.out.println(event);
-        return true;
     }
 
-    public static boolean testDeleteEventById() {
+    public static void testDeleteEventById() {
         session.getTransaction().begin();
         eventDAO.deleteEventById(27L);
         session.getTransaction().commit();
 
         EventDataSet event = eventDAO.getById(27L);
         System.out.println(event);
-        return true;
     }
 
-    public static boolean testGetAllSortByDate() {
+    public static void testGetAllSortByDate() {
         List<EventDataSet> events = eventDAO.getAllSortByDate();
         for (EventDataSet event : events) {
             System.out.println(event);
         }
-        return true;
     }
 
-    public static boolean testGetAllSortByName() {
+    public static void testGetAllSortByName() {
         List<EventDataSet> events = eventDAO.getAllSortByName();
         for (EventDataSet event : events) {
             System.out.println(event);
         }
-        return true;
+    }
+
+    public static void testGetServiece() {
+        try {
+            EventDataSet event = db.getEvent(17L);
+            System.out.println(event);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void testGetAllServiece() {
+        try {
+            List<EventDataSet> events = db.getAllEvents();
+
+            for (EventDataSet event : events) {
+                System.out.println(event);
+            }
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
     }
 }

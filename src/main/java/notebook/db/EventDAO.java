@@ -25,6 +25,10 @@ public class EventDAO {
         return session.get(EventDataSet.class, id);
     }
 
+    public Long getId(EventDataSet event) throws HibernateException {
+        return session.get(EventDataSet.class, event).getId();
+    }
+
     @Nullable
     public List<EventDataSet> getAll() {
         return session.createQuery(

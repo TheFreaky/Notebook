@@ -2,6 +2,8 @@ package notebook.graphics;
 
 import notebook.db.DataSerializator;
 import notebook.db.DataStorage;
+import notebook.db.DataStorageDB;
+import notebook.entity.EventDataSet;
 import notebook.exceptions.AudioCaptureException;
 import notebook.exceptions.IllegalDateFormatException;
 import notebook.exceptions.IllegalDatesSequenceException;
@@ -40,7 +42,7 @@ public class Gui {
     private DataStorage dataStorage;
 
     public Gui() {
-        dataStorage = new DataSerializator();
+        dataStorage = new DataStorageDB();
         dataStorage.load();
         refreshList();
         editButton.setEnabled(false);
@@ -118,7 +120,7 @@ public class Gui {
                 sortButton.setText("Sort by Title");
                 isPressed[0] = false;
             } else {
-                EventList.getInstance().sortByTitle();
+                EventList.getInstance().sortByName();
                 sortButton.setText("Sort by Date");
                 isPressed[0] = true;
             }
